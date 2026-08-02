@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MatchMaker Pro - Gerador de Times Equilibrados</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151c2c;
+      --card-border: #232d42;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-hover: #059669;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); padding: 24px 16px; max-width: 1150px; margin: 0 auto; }
+
+    header { text-align: center; margin-bottom: 32px; }
+    header h1 { font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 4px; }
+
+    .grid-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; }
+    @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.4); }
+    .card h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 18px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+    input[type="text"], select { width: 100%; padding: 12px; background: #0b0f19; border: 1px solid var(--card-border); border-radius: 8px; color: #fff; font-size: 0.95rem; transition: border-color 0.2s; }
+    input[type="text"]:focus, select:focus { outline: none; border-color: var(--accent-green); }
+
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+    .skill-item { background: #0b0f19; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--card-border); }
+    .skill-header { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
+    .skill-val { color: var(--accent-green); font-weight: 700; }
+    input[type="range"] { width: 100%; accent-color: var(--accent-green); cursor: pointer; }
+
+    .btn { width: 100%; padding: 12px 18px; background: var(--accent-green); color: #062f22; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; font-size: 0.95rem; }
+    .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; border: 1px solid var(--card-border); color: var(--text-muted); width: auto; padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; cursor: pointer; }
+    .btn-secondary:hover { background: #1e293b; color: #fff; border-color: #475569; }
+
+    .players-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; max-height: 420px; overflow-y: auto; padding-right: 4px; }
+    .player-card { background: #0b0f19; border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; position: relative; transition: border-color 0.2s; }
+    .player-card:hover { border-color: #334155; }
+    .player-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-right: 18px; }
+    .player-name { font-weight: 700; font-size: 0.95rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ovr-badge { background: linear-gradient(135deg, #10b981, #059669); color: #022c22; font-weight: 800; padding: 2px 8px; border-radius: 6px; font-size: 0.85rem; }
+    .mini-stats { font-size: 0.72rem; color: var(--text-muted); display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-top: 1px dashed var(--card-border); padding-top: 6px; }
+    .mini-stats span strong { color: #e2e8f0; }
+    .remove-btn { position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.1rem; line-height: 1; opacity: 0.7; }
+    .remove-btn:hover { opacity: 1; }
+
+    .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 28px; }
+    .team-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 20px; border-top: 4px solid var(--accent-blue); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3); }
+    .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .team-title { font-size: 1.15rem; font-weight: 700; }
+    .team-players { list-style: none; }
+    .team-players li { background: #0b0f19; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; border: 1px solid var(--card-border); }
+    .team-players li span { font-weight: 600; color: #e2e8f0; }
+    .team-players li strong { color: var(--accent-green); font-size: 0.85rem; background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 4px; }
+    .team-footer { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--card-border); font-size: 0.82rem; color: var(--text-muted); display: flex; justify-content: space-between; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚡ Gerador de Times </h1>
+    <p>Sorteio de times estatisticamente equilibrado (Notas de 0 a 10)</p>
+  </header>
+
+  <div class="grid-layout">
+    <!-- Formulário -->
+    <div class="card">
+      <h2>Adicionar Jogador</h2>
+      
+      <div class="input-group">
+        <label for="nome">Nome do Jogador</label>
+        <input type="text" id="nome" placeholder="Ex:Bruno Pereira" autocomplete="off">
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-header"><span>Finalização</span><span class="skill-val" id="v_fin">7.0</span></div>
+          <input type="range" id="fin" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('fin', this.value)">
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Drible</span><span class="skill-val" id="v_dri">7.0</span></div>
+          <input type="range" id="dri" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('dri', this.value)">
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Velocidade</span><span class="skill-val" id="v_vel">7.0</span></div>
+          <input type="range" id="vel" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('vel', this.value)">
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Controle</span><span class="skill-val" id="v_con">7.0</span></div>
+          <input type="range" id="con" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('con', this.value)">
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Passe</span><span class="skill-val" id="v_pas">7.0</span></div>
+          <input type="range" id="pas" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('pas', this.value)">
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span>Marcação</span><span class="skill-val" id="v_mar">7.0</span></div>
+          <input type="range" id="mar" min="0" max="10" step="0.5" value="7.0" oninput="atualizarVal('mar', this.value)">
+        </div>
+      </div>
+
+      <button class="btn" onclick="adicionarJogador()">+ Cadastrar Jogador</button>
+    </div>
+
+    <!-- Lista de Jogadores -->
+    <div class="card">
+      <h2>
+        <span>Elenco (<span id="count">0</span>)</span>
+        <button class="btn-secondary" onclick="limparTudo()">Limpar Tudo</button>
+      </h2>
+
+      <div class="players-list" id="lista-jogadores"></div>
+
+      <div style="margin-top: 20px; border-top: 1px solid var(--card-border); padding-top: 16px;">
+        <div class="input-group">
+          <label for="num-times">Número de Times</label>
+          <select id="num-times">
+            <option value="2">2 Times</option>
+            <option value="3">3 Times</option>
+            <option value="4">4 Times</option>
+          </select>
+        </div>
+        <button class="btn" style="background: var(--accent-blue); color: #fff;" onclick="sortearEquilibrado()">🔥 Sortear Times Equilibrados</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultado dos Times -->
+  <div id="resultado-times" class="teams-grid"></div>
+
+  <script>
+    let jogadores = JSON.parse(localStorage.getItem('matchmaker_v2_jogadores')) || [];
+
+    function atualizarVal(id, val) {
+      document.getElementById('v_' + id).innerText = parseFloat(val).toFixed(1);
+    }
+
+    function salvarEMostrar() {
+      localStorage.setItem('matchmaker_v2_jogadores', JSON.stringify(jogadores));
+      renderizarJogadores();
+    }
+
+    function adicionarJogador() {
+      const nomeInput = document.getElementById('nome');
+      const nome = nomeInput.value.trim();
+      if (!nome) return alert('Por favor, digite o nome do jogador!');
+
+      const stats = {
+        fin: parseFloat(document.getElementById('fin').value),
+        dri: parseFloat(document.getElementById('dri').value),
+        vel: parseFloat(document.getElementById('vel').value),
+        con: parseFloat(document.getElementById('con').value),
+        pas: parseFloat(document.getElementById('pas').value),
+        mar: parseFloat(document.getElementById('mar').value)
+      };
+
+      // Média Geral de 0 a 10
+      const ovr = (stats.fin + stats.dri + stats.vel + stats.con + stats.pas + stats.mar) / 6;
+
+      jogadores.push({ id: Date.now(), nome, stats, ovr: parseFloat(ovr.toFixed(1)) });
+      
+      // Reset formulário
+      nomeInput.value = '';
+      ['fin', 'dri', 'vel', 'con', 'pas', 'mar'].forEach(id => {
+        document.getElementById(id).value = 7.0;
+        atualizarVal(id, 7.0);
+      });
+
+      salvarEMostrar();
+    }
+
+    function removerJogador(id) {
+      jogadores = jogadores.filter(j => j.id !== id);
+      salvarEMostrar();
+    }
+
+    function limparTudo() {
+      if (jogadores.length === 0) return;
+      if (confirm('Deseja realmente apagar todos os jogadores cadastrados?')) {
+        jogadores = [];
+        salvarEMostrar();
+        document.getElementById('resultado-times').innerHTML = '';
+      }
+    }
+
+    function renderizarJogadores() {
+      const div = document.getElementById('lista-jogadores');
+      document.getElementById('count').innerText = jogadores.length;
+      div.innerHTML = '';
+
+      if (jogadores.length === 0) {
+        div.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1; text-align: center; padding: 20px 0;">Nenhum jogador cadastrado ainda.</p>`;
+        return;
+      }
+
+      jogadores.forEach(j => {
+        div.innerHTML += `
+          <div class="player-card">
+            <button class="remove-btn" onclick="removerJogador(${j.id})" title="Remover">&times;</button>
+            <div class="player-header">
+              <span class="player-name">${j.nome}</span>
+              <span class="ovr-badge">${j.ovr.toFixed(1)}</span>
+            </div>
+            <div class="mini-stats">
+              <span>FIN: <strong>${j.stats.fin}</strong></span>
+              <span>DRI: <strong>${j.stats.dri}</strong></span>
+              <span>VEL: <strong>${j.stats.vel}</strong></span>
+              <span>MAR: <strong>${j.stats.mar}</strong></span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function sortearEquilibrado() {
+      const qtdTimes = parseInt(document.getElementById('num-times').value);
+      if (jogadores.length < qtdTimes) return alert(`Adicione pelo menos ${qtdTimes} jogadores para sortear.`);
+
+      // 1. Ruído sutil para desempate aleatório entre jogadores de notas parecidas
+      let pool = jogadores.map(j => ({ ...j, randomOvr: j.ovr + (Math.random() * 0.2 - 0.1) }));
+      
+      // 2. Ordena os jogadores por nota (maior para menor)
+      pool.sort((a, b) => b.randomOvr - a.randomOvr);
+
+      // 3. Inicializa os times
+      let times = Array.from({ length: qtdTimes }, (_, i) => ({
+        nome: `Time ${i + 1}`,
+        jogadores: [],
+        somaOvr: 0,
+        somaFin: 0,
+        somaMar: 0
+      }));
+
+      // 4. Algoritmo Guloso (Snake Draft balanceado)
+      pool.forEach(jogador => {
+        times.sort((a, b) => a.somaOvr - b.somaOvr);
+        times[0].jogadores.push(jogador);
+        times[0].somaOvr += jogador.ovr;
+        times[0].somaFin += jogador.stats.fin;
+        times[0].somaMar += jogador.stats.mar;
+      });
+
+      // 5. Exibe os resultados
+      const resDiv = document.getElementById('resultado-times');
+      resDiv.innerHTML = '';
+
+      times.forEach(t => {
+        const mediaGeral = (t.somaOvr / t.jogadores.length).toFixed(1);
+        const mediaFin = (t.somaFin / t.jogadores.length).toFixed(1);
+        const mediaMar = (t.somaMar / t.jogadores.length).toFixed(1);
+
+        let html = `
+          <div class="team-card">
+            <div class="team-header">
+              <span class="team-title">${t.nome}</span>
+              <span class="ovr-badge" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff;">
+                Média: ${mediaGeral}
+              </span>
+            </div>
+            <ul class="team-players">
+        `;
+
+        t.jogadores.forEach(j => {
+          html += `
+            <li>
+              <span>${j.nome}</span>
+              <strong>OVR ${j.ovr.toFixed(1)}</strong>
+            </li>
+          `;
+        });
+
+        html += `
+            </ul>
+            <div class="team-footer">
+              <span>Ataque (FIN): <strong>${mediaFin}</strong></span>
+              <span>Defesa (MAR): <strong>${mediaMar}</strong></span>
+            </div>
+          </div>
+        `;
+        resDiv.innerHTML += html;
+      });
+    }
+
+    // Inicialização ao abrir a página
+    renderizarJogadores();
+  </script>
+</body>
+</html>
