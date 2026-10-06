@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MatchMaker Pro - Refined Edition</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-main: #0c0d12;
@@ -12,46 +13,63 @@
       --bg-card-hover: #181b26;
       --border: #222634;
       --border-focus: #3b4259;
-      
+
       --accent: #10b981;
       --accent-hover: #059669;
       --accent-subtle: rgba(16, 185, 129, 0.12);
-      
+
       --text-main: #f3f4f6;
       --text-muted: #9ca3af;
       --text-dim: #6b7280;
-      
+
       --danger: #ef4444;
       --danger-subtle: rgba(239, 68, 68, 0.1);
-      
+
+      --warning: #f59e0b;
+
       --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
       --radius: 14px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    
-    body { 
-      background-color: var(--bg-main); 
-      color: var(--text-main); 
-      padding: 40px 20px; 
-      max-width: 1100px; 
-      margin: 0 auto; 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
       min-height: 100vh;
     }
 
-    header { text-align: center; margin-bottom: 36px; }
-    header h1 { 
-      font-size: 2rem; 
-      font-weight: 700; 
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text-main);
       margin-bottom: 6px;
     }
-    header p { color: var(--text-muted); font-size: 0.92rem; font-weight: 400; }
 
-    /* Navegação por Abas com Segmentação Clara e Elegante */
-    .tabs { 
-      display: inline-flex; 
+    header p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 400;
+    }
+
+    /* ABAS */
+
+    .tabs {
+      display: inline-flex;
       background: var(--bg-card);
       border: 1px solid var(--border);
       padding: 6px;
@@ -65,943 +83,2558 @@
       gap: 6px;
       box-shadow: var(--shadow);
     }
-    .tab-btn { 
-      background: transparent; 
-      border: none; 
-      color: var(--text-muted); 
-      padding: 10px 20px; 
-      font-weight: 500; 
-      border-radius: 10px; 
-      cursor: pointer; 
-      transition: all 0.2s ease; 
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 20px;
+      font-weight: 500;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
       font-size: 0.88rem;
       white-space: nowrap;
       border: 1px solid transparent;
     }
-    .tab-btn:hover { 
-      color: var(--text-main); 
-      background: rgba(255, 255, 255, 0.03); 
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
       border-color: var(--border);
     }
-    .tab-btn.active { 
-      background: var(--accent); 
-      color: #0c0d12; 
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0c0d12;
       font-weight: 600;
       border-color: var(--accent);
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
     }
-    
-    .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    .tab-content {
+      display: none;
     }
 
-    .grid-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 24px; }
-    @media (max-width: 900px) { .grid-layout { grid-template-columns: 1fr; } }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
 
-    /* Cartões */
-    .card { 
-      background: var(--bg-card); 
-      border: 1px solid var(--border); 
-      border-radius: var(--radius); 
-      padding: 24px; 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* CARDS */
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
       box-shadow: var(--shadow);
       position: relative;
     }
-    
-    .card h2 { 
-      font-size: 1.15rem; 
-      font-weight: 600; 
-      margin-bottom: 20px; 
-      border-bottom: 1px solid var(--border); 
-      padding-bottom: 12px; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
+
+    .card h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       letter-spacing: -0.01em;
     }
 
-    .input-group { margin-bottom: 16px; }
-    .input-group label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.02em; }
-    
-    input[type="text"], select { 
-      width: 100%; 
-      padding: 12px 14px; 
-      background: var(--bg-main); 
-      border: 1px solid var(--border); 
-      border-radius: 10px; 
-      color: var(--text-main); 
-      font-size: 0.92rem; 
-      transition: all 0.2s; 
-    }
-    input[type="text"]:focus, select:focus { 
-      outline: none; 
-      border-color: var(--accent); 
+    .input-group {
+      margin-bottom: 16px;
     }
 
-    /* Sliders de Atributos */
-    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-    .skill-item { 
-      background: var(--bg-main); 
-      padding: 12px; 
-      border-radius: 10px; 
-      border: 1px solid var(--border); 
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
     }
-    .skill-header { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 500; margin-bottom: 6px; color: var(--text-muted); }
-    .skill-val { color: var(--accent); font-weight: 600; font-family: monospace; }
-    
-    input[type="range"] { 
-      width: 100%; 
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      transition: all 0.2s;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* SLIDERS */
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .skill-item {
+      background: var(--bg-main);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .skill-val {
+      color: var(--accent);
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    input[type="range"] {
+      width: 100%;
       height: 4px;
       background: var(--border);
       border-radius: 2px;
       appearance: none;
-      accent-color: var(--accent); 
-      cursor: pointer; 
+      accent-color: var(--accent);
+      cursor: pointer;
     }
 
-    /* Botões */
-    .btn { 
-      width: 100%; 
-      padding: 12px 18px; 
-      background: var(--accent); 
-      color: #0c0d12; 
-      font-weight: 600; 
-      border: none; 
-      border-radius: 10px; 
-      cursor: pointer; 
-      transition: all 0.2s; 
+    /* BOTÕES */
+
+    .btn {
+      width: 100%;
+      padding: 12px 18px;
+      background: var(--accent);
+      color: #0c0d12;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
       font-size: 0.92rem;
     }
-    .btn:hover { background: var(--accent-hover); }
-    
-    .btn-secondary { 
-      background: transparent; 
-      border: 1px solid var(--border); 
-      color: var(--text-muted); 
-      width: auto; 
-      padding: 6px 12px; 
-      font-size: 0.78rem; 
-      border-radius: 8px; 
-      cursor: pointer; 
+
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: auto;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      border-radius: 8px;
+      cursor: pointer;
       font-weight: 500;
-      transition: all 0.2s; 
+      transition: all 0.2s;
     }
-    .btn-secondary:hover { background: var(--bg-card-hover); color: var(--text-main); border-color: var(--border-focus); }
 
-    /* Listas de Jogadores */
-    .players-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; max-height: 440px; overflow-y: auto; padding-right: 4px; }
-    .players-list::-webkit-scrollbar { width: 4px; }
-    .players-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    .player-card { 
-      background: var(--bg-main); 
-      border: 1px solid var(--border); 
-      border-radius: 12px; 
-      padding: 14px; 
-      position: relative; 
-      transition: all 0.2s; 
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+      border-color: var(--border-focus);
     }
-    .player-card:hover { border-color: var(--border-focus); }
-    .player-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-right: 55px; }
-    .player-name { font-weight: 600; font-size: 0.9rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    
-    .ovr-badge { 
-      background: var(--accent-subtle); 
-      color: var(--accent); 
-      font-weight: 700; 
-      padding: 2px 8px; 
-      border-radius: 6px; 
+
+    /* LISTA DE JOGADORES */
+
+    .players-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      max-height: 440px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .players-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .players-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    .player-card {
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .player-card:hover {
+      border-color: var(--border-focus);
+    }
+
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-right: 55px;
+    }
+
+    .player-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ovr-badge {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
       font-size: 0.78rem;
       font-family: monospace;
       border: 1px solid rgba(16, 185, 129, 0.2);
     }
-    
-    .mini-stats { font-size: 0.72rem; color: var(--text-muted); display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-top: 1px solid var(--border); padding-top: 6px; }
-    .mini-stats span strong { color: var(--text-main); font-family: monospace; }
-    
-    .card-actions { position: absolute; top: 55px; right: 6px; display: flex; gap: 4px; }
-    .action-icon-btn { 
-      background: transparent; 
-      border: 1px solid var(--border); 
-      cursor: pointer; 
-      font-size: 0.8rem; 
-      width: 24px; height: 24px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 6px; 
-      transition: all 0.2s; 
-    }
-    .action-icon-btn:hover { background: var(--bg-card); border-color: var(--border-focus); }
 
-    /* Dashboard de Estatísticas da Partida */
-    .match-stats-banner { 
-      background: var(--bg-main); 
-      border: 1px solid var(--border); 
-      border-radius: var(--radius); 
-      padding: 18px; 
-      margin-bottom: 24px; 
-      display: flex; 
-      justify-content: space-around; 
-      text-align: center; 
-      flex-wrap: wrap; 
-      gap: 12px; 
+    .mini-stats {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
     }
-    .stat-box span { display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 2px; }
-    .stat-box strong { font-size: 1.15rem; color: var(--text-main); font-family: monospace; font-weight: 700; }
 
-    /* Times */
-    .teams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px; }
-    .team-card { 
-      background: var(--bg-card); 
-      border: 1px solid var(--border); 
-      border-radius: var(--radius); 
-      padding: 20px; 
-      border-top: 3px solid var(--accent); 
-      box-shadow: var(--shadow);
-    }
-    .team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .team-title { font-size: 1.1rem; font-weight: 600; }
-    
-    .team-players { list-style: none; }
-    .team-players li { 
-      background: var(--bg-main); 
-      padding: 10px 12px; 
-      border-radius: 8px; 
-      margin-bottom: 6px; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      font-size: 0.88rem; 
-      border: 1px solid var(--border); 
-    }
-    .team-players li span { font-weight: 500; color: var(--text-main); }
-    .team-players li strong { 
-      color: var(--accent); 
-      font-size: 0.78rem; 
-      background: var(--accent-subtle); 
-      padding: 2px 6px; 
-      border-radius: 4px; 
+    .mini-stats span strong {
+      color: var(--text-main);
       font-family: monospace;
     }
-    .team-footer { 
-      margin-top: 14px; 
-      padding-top: 10px; 
-      border-top: 1px solid var(--border); 
-      font-size: 0.78rem; 
-      color: var(--text-muted); 
-      display: flex; 
-      justify-content: space-between; 
+
+    .card-actions {
+      position: absolute;
+      top: 55px;
+      right: 6px;
+      display: flex;
+      gap: 4px;
     }
-    .team-footer strong { color: var(--text-main); font-family: monospace; }
+
+    .action-icon-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.8rem;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .action-icon-btn:hover {
+      background: var(--bg-card);
+      border-color: var(--border-focus);
+    }
+
+    /* ESTATÍSTICAS */
+
+    .match-stats-banner {
+      background: var(--bg-main);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .stat-box span {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .stat-box strong {
+      font-size: 1.15rem;
+      color: var(--text-main);
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    /* TIMES */
+
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      border-top: 3px solid var(--accent);
+      box-shadow: var(--shadow);
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .team-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .team-players {
+      list-style: none;
+    }
+
+    .team-players li {
+      background: var(--bg-main);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
+    }
+
+    .team-players li span {
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .team-players li strong {
+      color: var(--accent);
+      font-size: 0.78rem;
+      background: var(--accent-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .team-footer {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .team-footer strong {
+      color: var(--text-main);
+      font-family: monospace;
+    }
+
+    .balance-good {
+      color: var(--accent) !important;
+    }
+
+    .balance-medium {
+      color: var(--warning) !important;
+    }
+
+    .balance-bad {
+      color: var(--danger) !important;
+    }
+
+    .force-highlight {
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 25px 12px;
+      }
+
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .tabs {
+        width: 100%;
+      }
+
+      .tab-btn {
+        padding: 9px 12px;
+        font-size: 0.78rem;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <header>
     <h1>Gerador de times</h1>
-    <p> O MELHOR GERADOR DE TIMES EQUILIBRADOS</p>
+    <p>O MELHOR GERADOR DE TIMES EQUILIBRADOS</p>
   </header>
 
-  <!-- Sistema de Abas Aprimorado -->
+  <!-- ABAS -->
+
   <div class="tabs">
-    <button class="tab-btn active" onclick="mudarAba('cadastro')">1. Cadastro</button>
-    <button class="tab-btn" onclick="mudarAba('salvos')">2. Salvos (<span id="count-total">0</span>)</button>
-    <button class="tab-btn" onclick="mudarAba('convocacao')">3.Sorteio (<span id="count-convocados">0</span>)</button>
+    <button class="tab-btn active" onclick="mudarAba('cadastro')">
+      1. Cadastro
+    </button>
+
+    <button class="tab-btn" onclick="mudarAba('salvos')">
+      2. Salvos (<span id="count-total">0</span>)
+    </button>
+
+    <button class="tab-btn" onclick="mudarAba('convocacao')">
+      3. Sorteio (<span id="count-convocados">0</span>)
+    </button>
   </div>
 
-  <!-- ABA 1: CADASTRO DE JOGADORES -->
+  <!-- ABA 1 -->
+
   <div id="aba-cadastro" class="tab-content active">
+
     <div class="card" style="max-width: 580px; margin: 0 auto;">
-      <h2 id="titulo-form">Cadastrar Novo Atleta</h2>
+
+      <h2 id="titulo-form">
+        Cadastrar Novo Atleta
+      </h2>
+
       <input type="hidden" id="edit-id" value="">
 
       <div class="input-group">
-        <label for="nome">Nome do Jogador</label>
-        <input type="text" id="nome" placeholder="Ex: Bruno Pereira" autocomplete="off">
+
+        <label for="nome">
+          Nome do Jogador
+        </label>
+
+        <input
+          type="text"
+          id="nome"
+          placeholder="Ex: Bruno Pereira"
+          autocomplete="off"
+        >
+
       </div>
 
       <div class="skills-grid">
+
         <div class="skill-item">
-          <div class="skill-header"><span>Finalização</span><span class="skill-val" id="v_fin">3.0</span></div>
-          <input type="range" id="fin" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('fin', this.value)">
+          <div class="skill-header">
+            <span>Finalização</span>
+            <span class="skill-val" id="v_fin">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="fin"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('fin', this.value)"
+          >
         </div>
+
         <div class="skill-item">
-          <div class="skill-header"><span>Drible</span><span class="skill-val" id="v_dri">3.0</span></div>
-          <input type="range" id="dri" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('dri', this.value)">
+          <div class="skill-header">
+            <span>Drible</span>
+            <span class="skill-val" id="v_dri">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="dri"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('dri', this.value)"
+          >
         </div>
+
         <div class="skill-item">
-          <div class="skill-header"><span>Velocidade</span><span class="skill-val" id="v_vel">3.0</span></div>
-          <input type="range" id="vel" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('vel', this.value)">
+          <div class="skill-header">
+            <span>Velocidade</span>
+            <span class="skill-val" id="v_vel">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="vel"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('vel', this.value)"
+          >
         </div>
+
         <div class="skill-item">
-          <div class="skill-header"><span>Controle</span><span class="skill-val" id="v_con">3.0</span></div>
-          <input type="range" id="con" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('con', this.value)">
+          <div class="skill-header">
+            <span>Controle</span>
+            <span class="skill-val" id="v_con">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="con"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('con', this.value)"
+          >
         </div>
+
         <div class="skill-item">
-          <div class="skill-header"><span>Passe</span><span class="skill-val" id="v_pas">3.0</span></div>
-          <input type="range" id="pas" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('pas', this.value)">
+          <div class="skill-header">
+            <span>Passe</span>
+            <span class="skill-val" id="v_pas">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="pas"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('pas', this.value)"
+          >
         </div>
+
         <div class="skill-item">
-          <div class="skill-header"><span>Marcação</span><span class="skill-val" id="v_mar">3.0</span></div>
-          <input type="range" id="mar" min="0" max="5" step="0.5" value="3.0" oninput="atualizarVal('mar', this.value)">
+          <div class="skill-header">
+            <span>Marcação</span>
+            <span class="skill-val" id="v_mar">3.0</span>
+          </div>
+
+          <input
+            type="range"
+            id="mar"
+            min="0"
+            max="5"
+            step="0.5"
+            value="3.0"
+            oninput="atualizarVal('mar', this.value)"
+          >
         </div>
+
       </div>
 
-      <button class="btn" id="btn-salvar-form" onclick="salvarOuAtualizarJogador()">Salvar Atleta</button>
+      <button
+        class="btn"
+        id="btn-salvar-form"
+        onclick="salvarOuAtualizarJogador()"
+      >
+        Salvar Atleta
+      </button>
+
     </div>
   </div>
 
-  <!-- ABA 2: JOGADORES SALVOS -->
+  <!-- ABA 2 -->
+
   <div id="aba-salvos" class="tab-content">
+
     <div class="card">
+
       <h2>
         <span>Banco Geral de Atletas</span>
-        <button class="btn-secondary" onclick="limparBancoGeral()">Apagar Tudo</button>
+
+        <button
+          class="btn-secondary"
+          onclick="limparBancoGeral()"
+        >
+          Apagar Tudo
+        </button>
       </h2>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Clique em ➕ para incluir o atleta na partida de hoje.</p>
-      <div class="players-list" id="lista-banco-geral"></div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+        Clique em ➕ para incluir o atleta na partida de hoje.
+      </p>
+
+      <div
+        class="players-list"
+        id="lista-banco-geral"
+      ></div>
+
     </div>
   </div>
 
-  <!-- ABA 3: CONVOCAÇÃO E SORTEIO -->
+  <!-- ABA 3 -->
+
   <div id="aba-convocacao" class="tab-content">
+
     <div class="grid-layout">
-      <!-- Lista de Convocados -->
+
+      <!-- CONVOCAÇÃO -->
+
       <div class="card">
+
         <h2>
-          <span>Lista do Dia</span>
-          <button class="btn-secondary" onclick="removerTodosConvocados()">Retirar Todos 🗑️</button>
+
+          <span>
+            Lista do Dia
+          </span>
+
+          <button
+            class="btn-secondary"
+            onclick="removerTodosConvocados()"
+          >
+            Retirar Todos 🗑️
+          </button>
+
         </h2>
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">Atletas confirmados para a partida atual:</p>
-        <div class="players-list" id="lista-convocacao-view" style="max-height: 380px;"></div>
+
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px;">
+          Atletas confirmados para a partida atual:
+        </p>
+
+        <div
+          class="players-list"
+          id="lista-convocacao-view"
+          style="max-height: 380px;"
+        ></div>
+
       </div>
 
-      <!-- Sorteio -->
+      <!-- CONFIGURAÇÃO -->
+
       <div class="card">
-        <h2>Configurar Partida</h2>
-        <div class="input-group" style="margin-top: 15px;">
-          <label for="num-times">Número de Times</label>
+
+        <h2>
+          Configurar Partida
+        </h2>
+
+        <div
+          class="input-group"
+          style="margin-top: 15px;"
+        >
+
+          <label for="num-times">
+            Número de Times
+          </label>
+
           <select id="num-times">
-            <option value="2">2 Times</option>
-            <option value="3">3 Times</option>
-            <option value="4">4 Times</option>
+
+            <option value="2">
+              2 Times
+            </option>
+
+            <option value="3">
+              3 Times
+            </option>
+
+            <option value="4">
+              4 Times
+            </option>
+
           </select>
+
         </div>
-        <button class="btn" style="margin-top: 20px;" onclick="sortearEquilibrado()">Sortear Times Equilibrados ⚡</button>
+
+        <button
+          class="btn"
+          style="margin-top: 20px;"
+          onclick="sortearEquilibrado()"
+        >
+          Sortear Times Equilibrados ⚡
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Resultados -->
-    <div id="painel-resultados" style="margin-top: 28px; display: none;">
-      <div id="match-stats" class="match-stats-banner"></div>
-      <div id="resultado-times" class="teams-grid"></div>
+    <!-- RESULTADOS -->
+
+    <div
+      id="painel-resultados"
+      style="margin-top: 28px; display: none;"
+    >
+
+      <div
+        id="match-stats"
+        class="match-stats-banner"
+      ></div>
+
+      <div
+        id="resultado-times"
+        class="teams-grid"
+      ></div>
+
     </div>
+
   </div>
 
   <script>
-    let jogadores = JSON.parse(localStorage.getItem('matchmaker_v5_jogadores')) || [];
-    let convocadosIds = JSON.parse(localStorage.getItem('matchmaker_v5_convocados')) || [];
+
+    /* =========================================================
+       DADOS
+    ========================================================= */
+
+    let jogadores =
+      JSON.parse(
+        localStorage.getItem('matchmaker_v5_jogadores')
+      ) || [];
+
+    let convocadosIds =
+      JSON.parse(
+        localStorage.getItem('matchmaker_v5_convocados')
+      ) || [];
+
+
+    /* =========================================================
+       ABAS
+    ========================================================= */
 
     function mudarAba(aba) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+      document
+        .querySelectorAll('.tab-content')
+        .forEach(el =>
+          el.classList.remove('active')
+        );
+
+      document
+        .querySelectorAll('.tab-btn')
+        .forEach(el =>
+          el.classList.remove('active')
+        );
 
       if (aba === 'cadastro') {
-        document.getElementById('aba-cadastro').classList.add('active');
-        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+
+        document
+          .getElementById('aba-cadastro')
+          .classList.add('active');
+
+        document
+          .querySelectorAll('.tab-btn')[0]
+          .classList.add('active');
+
       } else if (aba === 'salvos') {
-        document.getElementById('aba-salvos').classList.add('active');
-        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+
+        document
+          .getElementById('aba-salvos')
+          .classList.add('active');
+
+        document
+          .querySelectorAll('.tab-btn')[1]
+          .classList.add('active');
+
         renderizarBancoGeral();
+
       } else {
-        document.getElementById('aba-convocacao').classList.add('active');
-        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+
+        document
+          .getElementById('aba-convocacao')
+          .classList.add('active');
+
+        document
+          .querySelectorAll('.tab-btn')[2]
+          .classList.add('active');
+
         renderizarConvocacao();
       }
+
       atualizarContadores();
     }
+
+
+    /* =========================================================
+       VALORES DOS SLIDERS
+    ========================================================= */
 
     function atualizarVal(id, val) {
-      document.getElementById('v_' + id).innerText = parseFloat(val).toFixed(1);
+
+      document
+        .getElementById('v_' + id)
+        .innerText =
+        parseFloat(val).toFixed(1);
     }
 
+
+    /* =========================================================
+       STORAGE
+    ========================================================= */
+
     function salvarDadosStorage() {
-      localStorage.setItem('matchmaker_v5_jogadores', JSON.stringify(jogadores));
-      localStorage.setItem('matchmaker_v5_convocados', JSON.stringify(convocadosIds));
+
+      localStorage.setItem(
+        'matchmaker_v5_jogadores',
+        JSON.stringify(jogadores)
+      );
+
+      localStorage.setItem(
+        'matchmaker_v5_convocados',
+        JSON.stringify(convocadosIds)
+      );
+
       atualizarContadores();
     }
 
+
     function atualizarContadores() {
-      document.getElementById('count-total').innerText = jogadores.length;
-      document.getElementById('count-convocados').innerText = convocadosIds.length;
+
+      document
+        .getElementById('count-total')
+        .innerText =
+        jogadores.length;
+
+      document
+        .getElementById('count-convocados')
+        .innerText =
+        convocadosIds.length;
     }
 
-    function salvarOuAtualizarJogador() {
-      const nomeInput = document.getElementById('nome');
-      const nome = nomeInput.value.trim();
-      const editId = document.getElementById('edit-id').value;
 
-      if (!nome) return alert('Por favor, digite o nome do jogador!');
+    /* =========================================================
+       CADASTRO / EDIÇÃO
+    ========================================================= */
+
+    function salvarOuAtualizarJogador() {
+
+      const nomeInput =
+        document.getElementById('nome');
+
+      const nome =
+        nomeInput.value.trim();
+
+      const editId =
+        document.getElementById('edit-id').value;
+
+      if (!nome) {
+        return alert(
+          'Por favor, digite o nome do jogador!'
+        );
+      }
 
       const stats = {
-        fin: parseFloat(document.getElementById('fin').value),
-        dri: parseFloat(document.getElementById('dri').value),
-        vel: parseFloat(document.getElementById('vel').value),
-        con: parseFloat(document.getElementById('con').value),
-        pas: parseFloat(document.getElementById('pas').value),
-        mar: parseFloat(document.getElementById('mar').value)
+
+        fin:
+          parseFloat(
+            document.getElementById('fin').value
+          ),
+
+        dri:
+          parseFloat(
+            document.getElementById('dri').value
+          ),
+
+        vel:
+          parseFloat(
+            document.getElementById('vel').value
+          ),
+
+        con:
+          parseFloat(
+            document.getElementById('con').value
+          ),
+
+        pas:
+          parseFloat(
+            document.getElementById('pas').value
+          ),
+
+        mar:
+          parseFloat(
+            document.getElementById('mar').value
+          )
+
       };
 
-      const ovr = (stats.fin + stats.dri + stats.vel + stats.con + stats.pas + stats.mar) / 6;
+
+      const ovr =
+        (
+          stats.fin +
+          stats.dri +
+          stats.vel +
+          stats.con +
+          stats.pas +
+          stats.mar
+        ) / 6;
+
 
       if (editId) {
-        const j = jogadores.find(item => item.id == editId);
+
+        const j =
+          jogadores.find(
+            item => item.id == editId
+          );
+
         if (j) {
+
           j.nome = nome;
           j.stats = stats;
-          j.ovr = parseFloat(ovr.toFixed(1));
+          j.ovr =
+            parseFloat(
+              ovr.toFixed(1)
+            );
         }
-        document.getElementById('edit-id').value = '';
-        document.getElementById('titulo-form').innerText = 'Cadastrar Novo Atleta';
-        document.getElementById('btn-salvar-form').innerText = 'Salvar Atleta';
+
+        document
+          .getElementById('edit-id')
+          .value = '';
+
+        document
+          .getElementById('titulo-form')
+          .innerText =
+          'Cadastrar Novo Atleta';
+
+        document
+          .getElementById('btn-salvar-form')
+          .innerText =
+          'Salvar Atleta';
+
       } else {
-        const novo = { id: Date.now(), nome, stats, ovr: parseFloat(ovr.toFixed(1)) };
+
+        const novo = {
+
+          id: Date.now(),
+
+          nome,
+
+          stats,
+
+          ovr:
+            parseFloat(
+              ovr.toFixed(1)
+            )
+
+        };
+
         jogadores.push(novo);
       }
 
+
       nomeInput.value = '';
-      ['fin', 'dri', 'vel', 'con', 'pas', 'mar'].forEach(id => {
-        document.getElementById(id).value = 3.0;
+
+      [
+        'fin',
+        'dri',
+        'vel',
+        'con',
+        'pas',
+        'mar'
+      ].forEach(id => {
+
+        document
+          .getElementById(id)
+          .value = 3.0;
+
         atualizarVal(id, 3.0);
+
       });
 
+
       salvarDadosStorage();
+
       mudarAba('salvos');
     }
 
+
     function prepararEdicao(id) {
-      const j = jogadores.find(item => item.id === id);
+
+      const j =
+        jogadores.find(
+          item => item.id === id
+        );
+
       if (!j) return;
 
-      document.getElementById('edit-id').value = j.id;
-      document.getElementById('nome').value = j.nome;
-      
+      document
+        .getElementById('edit-id')
+        .value = j.id;
+
+      document
+        .getElementById('nome')
+        .value = j.nome;
+
+
       for (let s in j.stats) {
-        document.getElementById(s).value = j.stats[s];
-        atualizarVal(s, j.stats[s]);
+
+        document
+          .getElementById(s)
+          .value = j.stats[s];
+
+        atualizarVal(
+          s,
+          j.stats[s]
+        );
       }
 
-      document.getElementById('titulo-form').innerText = 'Editar Atleta';
-      document.getElementById('btn-salvar-form').innerText = 'Salvar Alterações';
+
+      document
+        .getElementById('titulo-form')
+        .innerText =
+        'Editar Atleta';
+
+      document
+        .getElementById('btn-salvar-form')
+        .innerText =
+        'Salvar Alterações';
+
       mudarAba('cadastro');
     }
 
+
+    /* =========================================================
+       EXCLUSÃO
+    ========================================================= */
+
     function excluirJogadorGeral(id) {
-      if (confirm('Deseja excluir este jogador permanentemente?')) {
-        jogadores = jogadores.filter(j => j.id !== id);
-        convocadosIds = convocadosIds.filter(cid => cid !== id);
+
+      if (
+        confirm(
+          'Deseja excluir este jogador permanentemente?'
+        )
+      ) {
+
+        jogadores =
+          jogadores.filter(
+            j => j.id !== id
+          );
+
+        convocadosIds =
+          convocadosIds.filter(
+            cid => cid !== id
+          );
+
         salvarDadosStorage();
+
         renderizarBancoGeral();
+
         renderizarConvocacao();
       }
     }
 
+
+    /* =========================================================
+       CONVOCAÇÃO
+    ========================================================= */
+
     function adicionarConvocacao(id) {
+
       if (!convocadosIds.includes(id)) {
+
         convocadosIds.push(id);
+
         salvarDadosStorage();
+
       } else {
-        alert('Este atleta já está na convocação.');
+
+        alert(
+          'Este atleta já está na convocação.'
+        );
       }
     }
 
+
     function retirarConvocadoUnitario(id) {
-      convocadosIds = convocadosIds.filter(cid => cid !== id);
+
+      convocadosIds =
+        convocadosIds.filter(
+          cid => cid !== id
+        );
+
       salvarDadosStorage();
+
       renderizarConvocacao();
     }
 
+
     function removerTodosConvocados() {
-      if (convocadosIds.length === 0) return;
-      if (confirm('Deseja retirar todos os atletas da convocação?')) {
+
+      if (convocadosIds.length === 0)
+        return;
+
+      if (
+        confirm(
+          'Deseja retirar todos os atletas da convocação?'
+        )
+      ) {
+
         convocadosIds = [];
+
         salvarDadosStorage();
+
         renderizarConvocacao();
-        document.getElementById('painel-resultados').style.display = 'none';
+
+        document
+          .getElementById('painel-resultados')
+          .style.display = 'none';
       }
     }
+
 
     function limparBancoGeral() {
-      if (jogadores.length === 0) return;
-      if (confirm('Deseja apagar todos os jogadores salvos?')) {
+
+      if (jogadores.length === 0)
+        return;
+
+      if (
+        confirm(
+          'Deseja apagar todos os jogadores salvos?'
+        )
+      ) {
+
         jogadores = [];
+
         convocadosIds = [];
+
         salvarDadosStorage();
+
         renderizarBancoGeral();
+
         renderizarConvocacao();
-        document.getElementById('painel-resultados').style.display = 'none';
+
+        document
+          .getElementById('painel-resultados')
+          .style.display = 'none';
       }
     }
+
+
+    /* =========================================================
+       RENDER BANCO
+    ========================================================= */
 
     function renderizarBancoGeral() {
-      const div = document.getElementById('lista-banco-geral');
+
+      const div =
+        document.getElementById(
+          'lista-banco-geral'
+        );
+
       div.innerHTML = '';
+
 
       if (jogadores.length === 0) {
-        div.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1; text-align: center; padding: 20px 0;">Nenhum jogador cadastrado.</p>`;
+
+        div.innerHTML = `
+          <p style="
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px 0;
+          ">
+            Nenhum jogador cadastrado.
+          </p>
+        `;
+
         return;
       }
+
 
       jogadores.forEach(j => {
+
         div.innerHTML += `
+
           <div class="player-card">
+
             <div class="card-actions">
-              <button class="action-icon-btn" onclick="adicionarConvocacao(${j.id})" title="Adicionar à Convocação">➕</button>
-              <button class="action-icon-btn" onclick="prepararEdicao(${j.id})" title="Editar">📝</button>
-              <button class="action-icon-btn" onclick="excluirJogadorGeral(${j.id})" title="Excluir" style="color: var(--danger);">🗑️</button>
+
+              <button
+                class="action-icon-btn"
+                onclick="adicionarConvocacao(${j.id})"
+                title="Adicionar à Convocação"
+              >
+                ➕
+              </button>
+
+              <button
+                class="action-icon-btn"
+                onclick="prepararEdicao(${j.id})"
+                title="Editar"
+              >
+                📝
+              </button>
+
+              <button
+                class="action-icon-btn"
+                onclick="excluirJogadorGeral(${j.id})"
+                title="Excluir"
+                style="color: var(--danger);"
+              >
+                🗑️
+              </button>
+
             </div>
+
             <div class="player-header">
-              <span class="player-name">${j.nome}</span>
-              <span class="ovr-badge">${j.ovr.toFixed(1)}</span>
+
+              <span class="player-name">
+                ${j.nome}
+              </span>
+
+              <span class="ovr-badge">
+                ${j.ovr.toFixed(1)}
+              </span>
+
             </div>
+
             <div class="mini-stats">
-              <span>FIN: <strong>${j.stats.fin}</strong></span>
-              <span>DRI: <strong>${j.stats.dri}</strong></span>
-              <span>VEL: <strong>${j.stats.vel}</strong></span>
-              <span>MAR: <strong>${j.stats.mar}</strong></span>
+
+              <span>
+                FIN:
+                <strong>${j.stats.fin}</strong>
+              </span>
+
+              <span>
+                DRI:
+                <strong>${j.stats.dri}</strong>
+              </span>
+
+              <span>
+                VEL:
+                <strong>${j.stats.vel}</strong>
+              </span>
+
+              <span>
+                MAR:
+                <strong>${j.stats.mar}</strong>
+              </span>
+
             </div>
+
           </div>
         `;
       });
     }
 
+
+    /* =========================================================
+       RENDER CONVOCAÇÃO
+    ========================================================= */
+
     function renderizarConvocacao() {
-      const div = document.getElementById('lista-convocacao-view');
+
+      const div =
+        document.getElementById(
+          'lista-convocacao-view'
+        );
+
       div.innerHTML = '';
 
-      const listaAtiva = jogadores.filter(j => convocadosIds.includes(j.id));
+
+      const listaAtiva =
+        jogadores.filter(
+          j => convocadosIds.includes(j.id)
+        );
+
 
       if (listaAtiva.length === 0) {
-        div.innerHTML = `<p style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1 / -1; text-align: center; padding: 20px 0;">Nenhum atleta convocado. Vá em "Jogadores Salvos" e clique em ➕.</p>`;
+
+        div.innerHTML = `
+          <p style="
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px 0;
+          ">
+            Nenhum atleta convocado.
+            Vá em "Jogadores Salvos" e clique em ➕.
+          </p>
+        `;
+
         return;
       }
 
+
       listaAtiva.forEach(j => {
+
         div.innerHTML += `
+
           <div class="player-card">
+
             <div class="card-actions">
-              <button class="action-icon-btn" onclick="retirarConvocadoUnitario(${j.id})" title="Retirar" style="color: var(--danger);">✕</button>
+
+              <button
+                class="action-icon-btn"
+                onclick="retirarConvocadoUnitario(${j.id})"
+                title="Retirar"
+                style="color: var(--danger);"
+              >
+                ✕
+              </button>
+
             </div>
+
             <div class="player-header">
-              <span class="player-name">${j.nome}</span>
-              <span class="ovr-badge">${j.ovr.toFixed(1)}</span>
+
+              <span class="player-name">
+                ${j.nome}
+              </span>
+
+              <span class="ovr-badge">
+                ${j.ovr.toFixed(1)}
+              </span>
+
             </div>
+
             <div class="mini-stats">
-              <span>FIN: <strong>${j.stats.fin}</strong></span>
-              <span>DRI: <strong>${j.stats.dri}</strong></span>
-              <span>VEL: <strong>${j.stats.vel}</strong></span>
-              <span>MAR: <strong>${j.stats.mar}</strong></span>
+
+              <span>
+                FIN:
+                <strong>${j.stats.fin}</strong>
+              </span>
+
+              <span>
+                DRI:
+                <strong>${j.stats.dri}</strong>
+              </span>
+
+              <span>
+                VEL:
+                <strong>${j.stats.vel}</strong>
+              </span>
+
+              <span>
+                MAR:
+                <strong>${j.stats.mar}</strong>
+              </span>
+
             </div>
+
           </div>
         `;
       });
     }
 
-   function sortearEquilibrado() {
-  const ativos = jogadores.filter(j => convocadosIds.includes(j.id));
-  const qtdTimes = parseInt(document.getElementById('num-times').value);
 
-  if (ativos.length < qtdTimes) {
-    return alert(`Você precisa convocar pelo menos ${qtdTimes} jogadores para o sorteio.`);
-  }
+    /* =========================================================
+       NOVO ALGORITMO DE SORTEIO
+    ========================================================= */
 
-  // =========================================================
-  // CONFIGURAÇÃO DOS PESOS
-  // =========================================================
-  // OVR é o principal fator, mas todos os atributos participam.
-  const pesos = {
-    ovr: 40,
-    fin: 15,
-    dri: 10,
-    vel: 10,
-    con: 10,
-    pas: 7.5,
-    mar: 7.5
-  };
+    function sortearEquilibrado() {
 
-  // =========================================================
-  // NORMALIZAÇÃO DOS PESOS
-  // =========================================================
-  const somaPesos = Object.values(pesos).reduce((a, b) => a + b, 0);
+      const ativos =
+        jogadores.filter(
+          j => convocadosIds.includes(j.id)
+        );
 
-  // =========================================================
-  // FUNÇÃO DE FORÇA DO JOGADOR
-  // =========================================================
-  function forcaJogador(j) {
-    return (
-      j.ovr * pesos.ovr +
-      j.stats.fin * pesos.fin +
-      j.stats.dri * pesos.dri +
-      j.stats.vel * pesos.vel +
-      j.stats.con * pesos.con +
-      j.stats.pas * pesos.pas +
-      j.stats.mar * pesos.mar
-    ) / somaPesos;
-  }
+      const qtdTimes =
+        parseInt(
+          document.getElementById('num-times').value
+        );
 
-  // =========================================================
-  // CRIA UMA CÓPIA DOS JOGADORES COM FORÇA CALCULADA
-  // =========================================================
-  const pool = ativos.map(j => ({
-    ...j,
-    forca: forcaJogador(j)
-  }));
 
-  // =========================================================
-  // FUNÇÃO PARA CALCULAR A QUALIDADE DE UMA DIVISÃO
-  // =========================================================
-  function avaliarTimes(times) {
+      if (ativos.length < qtdTimes) {
 
-    const medias = times.map(time => {
-
-      const total = time.jogadores.length;
-
-      return {
-        ovr: time.jogadores.reduce((s, j) => s + j.ovr, 0) / total,
-
-        fin: time.jogadores.reduce((s, j) => s + j.stats.fin, 0) / total,
-
-        dri: time.jogadores.reduce((s, j) => s + j.stats.dri, 0) / total,
-
-        vel: time.jogadores.reduce((s, j) => s + j.stats.vel, 0) / total,
-
-        con: time.jogadores.reduce((s, j) => s + j.stats.con, 0) / total,
-
-        pas: time.jogadores.reduce((s, j) => s + j.stats.pas, 0) / total,
-
-        mar: time.jogadores.reduce((s, j) => s + j.stats.mar, 0) / total,
-
-        forca: time.jogadores.reduce((s, j) => s + j.forca, 0) / total
-      };
-    });
-
-    // ---------------------------------------------------------
-    // Média geral de cada atributo
-    // ---------------------------------------------------------
-    const geral = {};
-
-    Object.keys(medias[0]).forEach(stat => {
-      geral[stat] =
-        medias.reduce((s, m) => s + m[stat], 0) / medias.length;
-    });
-
-    // ---------------------------------------------------------
-    // Calcula o desvio dos times em relação à média geral
-    // ---------------------------------------------------------
-    let pontuacao = 0;
-
-    medias.forEach(m => {
-
-      pontuacao += Math.abs(m.ovr - geral.ovr) * 40;
-
-      pontuacao += Math.abs(m.fin - geral.fin) * 15;
-
-      pontuacao += Math.abs(m.dri - geral.dri) * 10;
-
-      pontuacao += Math.abs(m.vel - geral.vel) * 10;
-
-      pontuacao += Math.abs(m.con - geral.con) * 10;
-
-      pontuacao += Math.abs(m.pas - geral.pas) * 7.5;
-
-      pontuacao += Math.abs(m.mar - geral.mar) * 7.5;
-    });
-
-    // =========================================================
-    // PENALIZA TIMES COM QUANTIDADE DIFERENTE DE JOGADORES
-    // =========================================================
-
-    const quantidades = times.map(t => t.jogadores.length);
-
-    const maiorQuantidade = Math.max(...quantidades);
-    const menorQuantidade = Math.min(...quantidades);
-
-    if (maiorQuantidade - menorQuantidade > 1) {
-      pontuacao += 1000;
-    }
-
-    return {
-      pontuacao,
-      medias
-    };
-  }
-
-  // =========================================================
-  // CRIA UMA DIVISÃO VAZIA
-  // =========================================================
-  function criarTimes() {
-    return Array.from({ length: qtdTimes }, (_, i) => ({
-      nome: `Time ${i + 1}`,
-      jogadores: []
-    }));
-  }
-
-  // =========================================================
-  // GERA UMA DISTRIBUIÇÃO ALEATÓRIA INTELIGENTE
-  // =========================================================
-  function gerarTentativa() {
-
-    const times = criarTimes();
-
-    // Embaralha os jogadores
-    const embaralhados = [...pool].sort(() => Math.random() - 0.5);
-
-    // Começa pelos jogadores mais fortes
-    embaralhados.sort((a, b) => b.forca - a.forca);
-
-    // Distribuição em "cobra"
-    let ordem = Array.from({ length: qtdTimes }, (_, i) => i);
-
-    let indice = 0;
-
-    embaralhados.forEach(jogador => {
-
-      // Escolhe entre os times com menor força atual
-      let melhorTime = null;
-      let menorForca = Infinity;
-
-      times.forEach((time, i) => {
-
-        // Limita diferença de quantidade
-        const tamanhos = times.map(t => t.jogadores.length);
-        const menorTamanho = Math.min(...tamanhos);
-
-        if (
-          time.jogadores.length > menorTamanho &&
-          times.some(t => t.jogadores.length === menorTamanho)
-        ) {
-          return;
-        }
-
-        const forcaAtual =
-          time.jogadores.reduce((s, j) => s + j.forca, 0);
-
-        if (forcaAtual < menorForca) {
-          menorForca = forcaAtual;
-          melhorTime = i;
-        }
-      });
-
-      if (melhorTime === null) {
-        melhorTime = ordem[indice % ordem.length];
+        return alert(
+          `Você precisa convocar pelo menos ${qtdTimes} jogadores para o sorteio.`
+        );
       }
 
-      times[melhorTime].jogadores.push(jogador);
 
-      indice++;
-    });
+      /*
+       * ======================================================
+       * PESOS DA FORÇA INDIVIDUAL
+       * ======================================================
+       *
+       * A força não depende somente do OVR.
+       *
+       * O OVR tem bastante peso, mas os atributos também
+       * influenciam para evitar que jogadores com OVR igual
+       * sejam considerados exatamente iguais.
+       */
 
-    return times;
-  }
+      const pesos = {
 
-  // =========================================================
-  // PROCURA A MELHOR DIVISÃO
-  // =========================================================
-  let melhorResultado = null;
+        ovr: 40,
 
-  // Quanto maior, mais possibilidades serão testadas.
-  // 5000 já é bastante rápido na maioria dos celulares.
-  const NUM_TENTATIVAS = 5000;
+        fin: 15,
 
-  for (let tentativa = 0; tentativa < NUM_TENTATIVAS; tentativa++) {
+        dri: 10,
 
-    const times = gerarTentativa();
+        vel: 10,
 
-    const resultado = avaliarTimes(times);
+        con: 10,
 
-    if (
-      melhorResultado === null ||
-      resultado.pontuacao < melhorResultado.pontuacao
-    ) {
-      melhorResultado = {
-        times,
-        pontuacao: resultado.pontuacao,
-        medias: resultado.medias
+        pas: 7.5,
+
+        mar: 7.5
+
       };
-    }
-  }
 
-  const times = melhorResultado.times;
-  const medias = melhorResultado.medias;
 
-  // =========================================================
-  // ESTATÍSTICAS GERAIS
-  // =========================================================
+      const somaPesos =
+        Object.values(pesos)
+          .reduce(
+            (a, b) => a + b,
+            0
+          );
 
-  const mediaGeralOvr =
-    medias.reduce((s, m) => s + m.ovr, 0) / qtdTimes;
 
-  const maiorOvr = Math.max(...medias.map(m => m.ovr));
-  const menorOvr = Math.min(...medias.map(m => m.ovr));
+      /*
+       * ======================================================
+       * FORÇA INDIVIDUAL
+       * ======================================================
+       */
 
-  const diferencaOvr = maiorOvr - menorOvr;
+      function calcularForca(j) {
 
-  const maiorForca = Math.max(...medias.map(m => m.forca));
-  const menorForca = Math.min(...medias.map(m => m.forca));
+        return (
 
-  const diferencaForca = maiorForca - menorForca;
+          j.ovr * pesos.ovr +
 
-  // =========================================================
-  // CÁLCULO DO PERCENTUAL DE EQUILÍBRIO
-  // =========================================================
+          j.stats.fin * pesos.fin +
 
-  let desequilibrio = 0;
+          j.stats.dri * pesos.dri +
 
-  medias.forEach(m => {
+          j.stats.vel * pesos.vel +
 
-    desequilibrio +=
-      Math.abs(m.ovr - mediaGeralOvr) * 40;
+          j.stats.con * pesos.con +
 
-    desequilibrio +=
-      Math.abs(m.fin - (medias.reduce((s, x) => s + x.fin, 0) / qtdTimes)) * 15;
+          j.stats.pas * pesos.pas +
 
-    desequilibrio +=
-      Math.abs(m.dri - (medias.reduce((s, x) => s + x.dri, 0) / qtdTimes)) * 10;
+          j.stats.mar * pesos.mar
 
-    desequilibrio +=
-      Math.abs(m.vel - (medias.reduce((s, x) => s + x.vel, 0) / qtdTimes)) * 10;
+        ) / somaPesos;
+      }
 
-    desequilibrio +=
-      Math.abs(m.con - (medias.reduce((s, x) => s + x.con, 0) / qtdTimes)) * 10;
 
-    desequilibrio +=
-      Math.abs(m.pas - (medias.reduce((s, x) => s + x.pas, 0) / qtdTimes)) * 7.5;
+      /*
+       * Cria jogadores com força calculada.
+       */
 
-    desequilibrio +=
-      Math.abs(m.mar - (medias.reduce((s, x) => s + x.mar, 0) / qtdTimes)) * 7.5;
-  });
+      const pool =
+        ativos.map(j => ({
 
-  let percentualEquilibrio =
-    100 - (desequilibrio / qtdTimes) * 2.5;
+          ...j,
 
-  percentualEquilibrio =
-    Math.max(0, Math.min(100, percentualEquilibrio));
+          forca:
+            calcularForca(j)
 
-  // =========================================================
-  // MOSTRA O PAINEL DE ESTATÍSTICAS
-  // =========================================================
+        }));
 
-  const statsBanner = document.getElementById('match-stats');
 
-  statsBanner.innerHTML = `
-    <div class="stat-box">
-      <span>Média Geral</span>
-      <strong>${mediaGeralOvr.toFixed(2)}</strong>
-    </div>
+      /*
+       * ======================================================
+       * TAMANHO IDEAL DOS TIMES
+       * ======================================================
+       */
 
-    <div class="stat-box">
-      <span>Diferença OVR</span>
-      <strong>${diferencaOvr.toFixed(2)} pts</strong>
-    </div>
+      const totalJogadores =
+        pool.length;
 
-    <div class="stat-box">
-      <span>Diferença Geral</span>
-      <strong>${diferencaForca.toFixed(2)}</strong>
-    </div>
+      const tamanhoBase =
+        Math.floor(
+          totalJogadores / qtdTimes
+        );
 
-    <div class="stat-box">
-      <span>Equilíbrio</span>
-      <strong style="color: var(--accent);">
-        ${percentualEquilibrio.toFixed(1)}%
-      </strong>
-    </div>
-  `;
+      const timesComJogadorExtra =
+        totalJogadores % qtdTimes;
 
-  // =========================================================
-  // MOSTRA OS TIMES
-  // =========================================================
 
-  const resDiv = document.getElementById('resultado-times');
+      /*
+       * ======================================================
+       * CRIA TIMES
+       * ======================================================
+       */
 
-  resDiv.innerHTML = '';
+      function criarTimes() {
 
-  times.forEach((t, index) => {
+        return Array.from(
+          { length: qtdTimes },
+          (_, i) => ({
 
-    const media = medias[index];
+            nome:
+              `Time ${i + 1}`,
 
-    const mediaFin = media.fin.toFixed(1);
-    const mediaMar = media.mar.toFixed(1);
+            jogadores: [],
 
-    let html = `
-      <div class="team-card">
+            forcaTotal: 0
 
-        <div class="team-header">
-          <span class="team-title">
-            ${t.nome}
+          })
+        );
+      }
+
+
+      /*
+       * ======================================================
+       * ESTATÍSTICAS DO TIME
+       * ======================================================
+       */
+
+      function calcularEstatisticas(times) {
+
+        return times.map(time => {
+
+          const qtd =
+            time.jogadores.length;
+
+          if (qtd === 0) {
+
+            return {
+
+              ovr: 0,
+
+              fin: 0,
+
+              dri: 0,
+
+              vel: 0,
+
+              con: 0,
+
+              pas: 0,
+
+              mar: 0,
+
+              forca: 0,
+
+              forcaTotal: 0,
+
+              jogadores: 0
+
+            };
+          }
+
+
+          return {
+
+            ovr:
+              time.jogadores.reduce(
+                (s, j) => s + j.ovr,
+                0
+              ) / qtd,
+
+            fin:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.fin,
+                0
+              ) / qtd,
+
+            dri:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.dri,
+                0
+              ) / qtd,
+
+            vel:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.vel,
+                0
+              ) / qtd,
+
+            con:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.con,
+                0
+              ) / qtd,
+
+            pas:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.pas,
+                0
+              ) / qtd,
+
+            mar:
+              time.jogadores.reduce(
+                (s, j) => s + j.stats.mar,
+                0
+              ) / qtd,
+
+            forca:
+              time.jogadores.reduce(
+                (s, j) => s + j.forca,
+                0
+              ) / qtd,
+
+            forcaTotal:
+              time.jogadores.reduce(
+                (s, j) => s + j.forca,
+                0
+              ),
+
+            jogadores: qtd
+
+          };
+
+        });
+      }
+
+
+      /*
+       * ======================================================
+       * AVALIAÇÃO DE UMA DIVISÃO
+       * ======================================================
+       *
+       * Aqui está a principal mudança.
+       *
+       * O algoritmo dá MUITO mais importância para a
+       * diferença entre as forças dos times.
+       */
+
+      function avaliarTimes(times) {
+
+        const medias =
+          calcularEstatisticas(times);
+
+
+        const forcas =
+          medias.map(
+            m => m.forca
+          );
+
+
+        const maiores =
+          Math.max(...forcas);
+
+        const menores =
+          Math.min(...forcas);
+
+
+        /*
+         * Diferença entre o time mais forte e o mais fraco.
+         */
+
+        const amplitudeForca =
+          maiores - menores;
+
+
+        /*
+         * Calcula diferença média entre os times.
+         */
+
+        let diferencaMedia = 0;
+
+        for (
+          let i = 0;
+          i < forcas.length;
+          i++
+        ) {
+
+          for (
+            let j = i + 1;
+            j < forcas.length;
+            j++
+          ) {
+
+            diferencaMedia +=
+              Math.abs(
+                forcas[i] -
+                forcas[j]
+              );
+          }
+        }
+
+
+        /*
+         * Diferenças de OVR.
+         */
+
+        const ovrs =
+          medias.map(
+            m => m.ovr
+          );
+
+        const amplitudeOvr =
+          Math.max(...ovrs) -
+          Math.min(...ovrs);
+
+
+        /*
+         * Diferenças de atributos.
+         */
+
+        const atributos = [
+          'fin',
+          'dri',
+          'vel',
+          'con',
+          'pas',
+          'mar'
+        ];
+
+
+        let diferencaAtributos = 0;
+
+
+        atributos.forEach(attr => {
+
+          const valores =
+            medias.map(
+              m => m[attr]
+            );
+
+          diferencaAtributos +=
+            Math.max(...valores) -
+            Math.min(...valores);
+
+        });
+
+
+        /*
+         * ==================================================
+         * PENALIDADE POR QUANTIDADE DE JOGADORES
+         * ==================================================
+         */
+
+        const quantidades =
+          medias.map(
+            m => m.jogadores
+          );
+
+        const maiorQuantidade =
+          Math.max(...quantidades);
+
+        const menorQuantidade =
+          Math.min(...quantidades);
+
+
+        let penalidadeQuantidade = 0;
+
+
+        /*
+         * Não queremos times com números diferentes
+         * quando existe possibilidade de evitar.
+         */
+
+        if (
+          maiorQuantidade -
+          menorQuantidade > 1
+        ) {
+
+          penalidadeQuantidade =
+            10000 *
+            (
+              maiorQuantidade -
+              menorQuantidade
+            );
+
+        }
+
+
+        /*
+         * ==================================================
+         * NOTA FINAL
+         * ==================================================
+         *
+         * O peso da força é propositalmente enorme.
+         *
+         * Isso faz o algoritmo priorizar:
+         *
+         * 1. força total/média dos times
+         * 2. diferença entre melhor e pior
+         * 3. OVR
+         * 4. atributos
+         * 5. quantidade
+         */
+
+        const pontuacao =
+
+          amplitudeForca * 10000 +
+
+          diferencaMedia * 3000 +
+
+          amplitudeOvr * 800 +
+
+          diferencaAtributos * 100 +
+
+          penalidadeQuantidade;
+
+
+        return {
+
+          pontuacao,
+
+          medias,
+
+          amplitudeForca,
+
+          amplitudeOvr,
+
+          diferencaMedia
+
+        };
+      }
+
+
+      /*
+       * ======================================================
+       * GERADOR DE UMA TENTATIVA
+       * ======================================================
+       */
+
+      function gerarTentativa() {
+
+        const times =
+          criarTimes();
+
+
+        /*
+         * Embaralha primeiro.
+         */
+
+        const embaralhados =
+          [...pool].sort(
+            () =>
+              Math.random() - 0.5
+          );
+
+
+        /*
+         * Ordena por força.
+         *
+         * Isso permite utilizar distribuição em serpentina.
+         */
+
+        embaralhados.sort(
+          (a, b) =>
+            b.forca - a.forca
+        );
+
+
+        /*
+         * Pequena variação aleatória entre jogadores
+         * de força semelhante.
+         */
+
+        for (
+          let i = 0;
+          i < embaralhados.length - 1;
+          i++
+        ) {
+
+          if (
+            Math.abs(
+              embaralhados[i].forca -
+              embaralhados[i + 1].forca
+            ) < 0.15
+          ) {
+
+            if (
+              Math.random() < 0.5
+            ) {
+
+              const temp =
+                embaralhados[i];
+
+              embaralhados[i] =
+                embaralhados[i + 1];
+
+              embaralhados[i + 1] =
+                temp;
+            }
+          }
+        }
+
+
+        /*
+         * Distribuição inteligente.
+         *
+         * Jogadores fortes vão para os times que
+         * estão mais fracos naquele momento.
+         */
+
+        embaralhados.forEach(
+          jogador => {
+
+            /*
+             * Verifica quais times ainda podem
+             * receber jogador.
+             */
+
+            const tamanhos =
+              times.map(
+                t => t.jogadores.length
+              );
+
+            const menorTamanho =
+              Math.min(...tamanhos);
+
+
+            let candidatos =
+              times.filter(
+                t =>
+                  t.jogadores.length ===
+                  menorTamanho
+              );
+
+
+            /*
+             * Se todos os candidatos tiverem
+             * o mesmo tamanho, escolhemos entre
+             * os que possuem menor força.
+             */
+
+            candidatos.sort(
+              (a, b) =>
+                a.forcaTotal -
+                b.forcaTotal
+            );
+
+
+            /*
+             * Para aumentar a aleatoriedade,
+             * escolhemos entre os melhores candidatos.
+             */
+
+            let escolhido =
+              candidatos[0];
+
+
+            if (
+              candidatos.length > 1
+            ) {
+
+              const limite =
+                Math.min(
+                  candidatos.length,
+                  2
+                );
+
+              escolhido =
+                candidatos[
+                  Math.floor(
+                    Math.random() *
+                    limite
+                  )
+                ];
+            }
+
+
+            escolhido.jogadores.push(
+              jogador
+            );
+
+            escolhido.forcaTotal +=
+              jogador.forca;
+          }
+        );
+
+
+        return times;
+      }
+
+
+      /*
+       * ======================================================
+       * BUSCA DA MELHOR DIVISÃO
+       * ======================================================
+       */
+
+      let melhorResultado = null;
+
+
+      /*
+       * Número de tentativas.
+       *
+       * 20.000 fornece uma busca muito mais agressiva
+       * por combinações equilibradas.
+       *
+       * Como os cálculos são leves, funciona bem
+       * em celulares modernos.
+       */
+
+      let NUM_TENTATIVAS = 20000;
+
+
+      /*
+       * Para muitos jogadores, reduz um pouco a quantidade
+       * para evitar travamentos em celulares.
+       */
+
+      if (pool.length >= 30) {
+
+        NUM_TENTATIVAS = 10000;
+
+      }
+
+
+      for (
+        let tentativa = 0;
+        tentativa < NUM_TENTATIVAS;
+        tentativa++
+      ) {
+
+        const times =
+          gerarTentativa();
+
+
+        const resultado =
+          avaliarTimes(times);
+
+
+        if (
+          melhorResultado === null ||
+          resultado.pontuacao <
+          melhorResultado.pontuacao
+        ) {
+
+          melhorResultado = {
+
+            times,
+
+            pontuacao:
+              resultado.pontuacao,
+
+            medias:
+              resultado.medias,
+
+            amplitudeForca:
+              resultado.amplitudeForca,
+
+            amplitudeOvr:
+              resultado.amplitudeOvr
+
+          };
+
+
+          /*
+           * Se a diferença já for extremamente pequena,
+           * não há necessidade de continuar procurando.
+           */
+
+          if (
+            resultado.amplitudeForca <= 0.01
+          ) {
+
+            break;
+
+          }
+        }
+      }
+
+
+      /*
+       * ======================================================
+       * RESULTADO FINAL
+       * ======================================================
+       */
+
+      const times =
+        melhorResultado.times;
+
+      const medias =
+        melhorResultado.medias;
+
+
+      /*
+       * ======================================================
+       * ESTATÍSTICAS
+       * ======================================================
+       */
+
+      const mediaGeralForca =
+        medias.reduce(
+          (s, m) => s + m.forca,
+          0
+        ) / qtdTimes;
+
+
+      const maiorForca =
+        Math.max(
+          ...medias.map(
+            m => m.forca
+          )
+        );
+
+
+      const menorForca =
+        Math.min(
+          ...medias.map(
+            m => m.forca
+          )
+        );
+
+
+      const diferencaForca =
+        maiorForca -
+        menorForca;
+
+
+      const maiorOvr =
+        Math.max(
+          ...medias.map(
+            m => m.ovr
+          )
+        );
+
+
+      const menorOvr =
+        Math.min(
+          ...medias.map(
+            m => m.ovr
+          )
+        );
+
+
+      const diferencaOvr =
+        maiorOvr -
+        menorOvr;
+
+
+      /*
+       * ======================================================
+       * PERCENTUAL DE EQUILÍBRIO
+       * ======================================================
+       *
+       * Quanto menor a diferença, maior o percentual.
+       */
+
+      let percentualEquilibrio;
+
+
+      /*
+       * Como a força individual varia aproximadamente
+       * entre 0 e 5, utilizamos uma escala própria.
+       */
+
+      percentualEquilibrio =
+        100 -
+        (
+          diferencaForca *
+          20
+        );
+
+
+      percentualEquilibrio =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            percentualEquilibrio
+          )
+        );
+
+
+      /*
+       * Pequeno bônus quando OVR também está praticamente igual.
+       */
+
+      if (
+        diferencaOvr <= 0.05
+      ) {
+
+        percentualEquilibrio =
+          Math.min(
+            100,
+            percentualEquilibrio + 1
+          );
+
+      }
+
+
+      /*
+       * ======================================================
+       * CLASSIFICAÇÃO
+       * ======================================================
+       */
+
+      let classeEquilibrio =
+        'balance-bad';
+
+      let textoEquilibrio =
+        'Desequilibrado';
+
+
+      if (
+        percentualEquilibrio >= 97
+      ) {
+
+        classeEquilibrio =
+          'balance-good';
+
+        textoEquilibrio =
+          'Excelente';
+
+      } else if (
+        percentualEquilibrio >= 90
+      ) {
+
+        classeEquilibrio =
+          'balance-good';
+
+        textoEquilibrio =
+          'Muito equilibrado';
+
+      } else if (
+        percentualEquilibrio >= 80
+      ) {
+
+        classeEquilibrio =
+          'balance-medium';
+
+        textoEquilibrio =
+          'Equilibrado';
+
+      } else {
+
+        classeEquilibrio =
+          'balance-bad';
+
+        textoEquilibrio =
+          'Regular';
+
+      }
+
+
+      /*
+       * ======================================================
+       * PAINEL DE ESTATÍSTICAS
+       * ======================================================
+       */
+
+      const statsBanner =
+        document.getElementById(
+          'match-stats'
+        );
+
+
+      statsBanner.innerHTML = `
+
+        <div class="stat-box">
+
+          <span>
+            Força Média
           </span>
 
-          <span class="ovr-badge">
-            Média: ${media.ovr.toFixed(2)}
-          </span>
+          <strong>
+            ${mediaGeralForca.toFixed(2)}
+          </strong>
+
         </div>
 
-        <ul class="team-players">
-    `;
 
-    t.jogadores.forEach(j => {
+        <div class="stat-box">
 
-      html += `
-        <li>
-          <span>${j.nome}</span>
-          <strong>
-            OVR ${j.ovr.toFixed(1)}
+          <span>
+            Diferença de Força
+          </span>
+
+          <strong
+            class="${diferencaForca <= 0.10
+              ? 'balance-good'
+              : diferencaForca <= 0.25
+                ? 'balance-medium'
+                : 'balance-bad'}"
+          >
+            ${diferencaForca.toFixed(2)}
           </strong>
-        </li>
+
+        </div>
+
+
+        <div class="stat-box">
+
+          <span>
+            Diferença OVR
+          </span>
+
+          <strong>
+            ${diferencaOvr.toFixed(2)}
+          </strong>
+
+        </div>
+
+
+        <div class="stat-box">
+
+          <span>
+            Equilíbrio
+          </span>
+
+          <strong
+            class="${classeEquilibrio}"
+          >
+            ${percentualEquilibrio.toFixed(1)}%
+          </strong>
+
+        </div>
+
       `;
 
-    });
 
-    html += `
-        </ul>
+      /*
+       * ======================================================
+       * MOSTRAR TIMES
+       * ======================================================
+       */
 
-        <div class="team-footer">
+      const resDiv =
+        document.getElementById(
+          'resultado-times'
+        );
 
-          <span>
-            Ataque (FIN):
-            <strong>${mediaFin}</strong>
-          </span>
 
-          <span>
-            Defesa (MAR):
-            <strong>${mediaMar}</strong>
-          </span>
+      resDiv.innerHTML = '';
 
-        </div>
 
-      </div>
-    `;
+      times.forEach(
+        (t, index) => {
 
-    resDiv.innerHTML += html;
-  });
+          const media =
+            medias[index];
 
-  // =========================================================
-  // EXIBE RESULTADO
-  // =========================================================
 
-  document.getElementById('painel-resultados').style.display = 'block';
+          const mediaFin =
+            media.fin.toFixed(1);
 
-  // Rola suavemente até o resultado
-  setTimeout(() => {
-    document.getElementById('painel-resultados')
-      .scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-  }, 100);
-}
+          const mediaMar =
+            media.mar.toFixed(1);
+
+
+          /*
+           * Cor da força individual do time.
+           */
+
+          let classeForca =
+            'balance-good';
+
+
+          if (
+            Math.abs(
+              media.forca -
+              mediaGeralForca
+            ) > 0.20
+          ) {
+
+            classeForca =
+              'balance-medium';
+          }
+
+
+          if (
+            Math.abs(
+              media.forca -
+              mediaGeralForca
+            ) > 0.40
+          ) {
+
+            classeForca =
+              'balance-bad';
+          }
+
+
+          let html = `
+
+            <div class="team-card">
+
+              <div class="team-header">
+
+                <span class="team-title">
+                  ${t.nome}
+                </span>
+
+                <span class="ovr-badge">
+                  OVR ${media.ovr.toFixed(2)}
+                </span>
+
+              </div>
+
+
+              <div style="
+                text-align:center;
+                padding:10px 0 14px;
+                border-bottom:1px solid var(--border);
+                margin-bottom:14px;
+              ">
+
+                <div style="
+                  font-size:0.68rem;
+                  color:var(--text-muted);
+                  text-transform:uppercase;
+                  font-weight:600;
+                  letter-spacing:0.05em;
+                  margin-bottom:3px;
+                ">
+                  Força do Time
+                </div>
+
+                <div class="force-highlight ${classeForca}">
+                  ${media.forca.toFixed(2)}
+                </div>
+
+              </div>
+
+
+              <ul class="team-players">
+          `;
+
+
+          t.jogadores.forEach(
+            j => {
+
+              html += `
+
+                <li>
+
+                  <span>
+                    ${j.nome}
+                  </span>
+
+                  <strong>
+                    OVR ${j.ovr.toFixed(1)}
+                  </strong>
+
+                </li>
+
+              `;
+            }
+          );
+
+
+          html += `
+
+              </ul>
+
+
+              <div class="team-footer">
+
+                <span>
+                  Jogadores:
+                  <strong>
+                    ${t.jogadores.length}
+                  </strong>
+                </span>
+
+                <span>
+                  FIN:
+                  <strong>
+                    ${mediaFin}
+                  </strong>
+                </span>
+
+                <span>
+                  MAR:
+                  <strong>
+                    ${mediaMar}
+                  </strong>
+                </span>
+
+              </div>
+
+            </div>
+
+          `;
+
+
+          resDiv.innerHTML += html;
+
+        }
+      );
+
+
+      /*
+       * ======================================================
+       * EXIBE RESULTADO
+       * ======================================================
+       */
+
+      document
+        .getElementById(
+          'painel-resultados'
+        )
+        .style.display = 'block';
+
+
+      /*
+       * Rola suavemente até o resultado.
+       */
+
+      setTimeout(() => {
+
+        document
+          .getElementById(
+            'painel-resultados'
+          )
+          .scrollIntoView({
+
+            behavior: 'smooth',
+
+            block: 'start'
+
+          });
+
+      }, 100);
+
+    }
+
+
+    /* =========================================================
+       INICIALIZAÇÃO
+    ========================================================= */
+
+    atualizarContadores();
+
   </script>
+
 </body>
 </html>
